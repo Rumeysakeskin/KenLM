@@ -1,0 +1,20 @@
+Boost.Test WARNING: token "lm/test.arpa" does not correspond to the Boost.Test argument 
+                    and should be placed after all Boost.Test arguments and the -- separator.
+                    For example: left_test --random -- lm/test.arpa
+Running 6 test cases...
+unknown location(0): fatal error: in "TrieAll": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 8 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/left_test.cc(375): last checkpoint: "TrieAll" test entry
+unknown location(0): fatal error: in "QuantTrieAll": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 8 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/left_test.cc(378): last checkpoint: "QuantTrieAll" test entry
+unknown location(0): fatal error: in "ArrayQuantTrieAll": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 8 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/left_test.cc(381): last checkpoint: "ArrayQuantTrieAll" test entry
+unknown location(0): fatal error: in "ArrayTrieAll": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 8 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/left_test.cc(384): last checkpoint: "ArrayTrieAll" test entry
+
+*** 4 failures are detected in the test module "LeftTest"
+
+EXIT STATUS: 201

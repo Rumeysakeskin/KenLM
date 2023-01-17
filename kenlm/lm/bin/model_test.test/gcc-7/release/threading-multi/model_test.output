@@ -1,0 +1,35 @@
+Boost.Test WARNING: token "lm/test.arpa" does not correspond to the Boost.Test argument 
+                    and should be placed after all Boost.Test arguments and the -- separator.
+                    For example: model_test --random -- lm/test.arpa
+Boost.Test WARNING: token "lm/test_nounk.arpa" does not correspond to the Boost.Test argument 
+                    and should be placed after all Boost.Test arguments and the -- separator.
+                    For example: model_test --random -- lm/test_nounk.arpa
+Running 12 test cases...
+unknown location(0): fatal error: in "trie": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 8 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/model_test.cc(304): last checkpoint
+unknown location(0): fatal error: in "quant_trie": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 8 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/model_test.cc(304): last checkpoint
+unknown location(0): fatal error: in "bhiksha_trie": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 8 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/model_test.cc(304): last checkpoint
+unknown location(0): fatal error: in "quant_bhiksha_trie": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 8 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/model_test.cc(304): last checkpoint
+unknown location(0): fatal error: in "write_and_read_trie": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 9 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/model_test.cc(304): last checkpoint
+unknown location(0): fatal error: in "write_and_read_quant_trie": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 9 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/model_test.cc(304): last checkpoint
+unknown location(0): fatal error: in "write_and_read_array_trie": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 9 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/model_test.cc(304): last checkpoint
+unknown location(0): fatal error: in "write_and_read_quant_array_trie": util::FDException: util/file.cc:111 in void util::ResizeOrThrow(int, uint64_t) threw FDException because `ret'.
+No such file or directory in fd 9 while resizing to 0 bytes Byte: 62 File: lm/test.arpa
+lm/model_test.cc(304): last checkpoint
+
+*** 8 failures are detected in the test module "ModelTest"
+
+EXIT STATUS: 201
