@@ -7,7 +7,7 @@ In this repository we will train language model on **Turkish corpus dataset** an
 ### Train KenLM
 - Compress a file using bzip2 command:
 ```
-bzip2 corpust.txt
+bzip2 corpus.txt
 ```
 
 - Train language model by 3-gram:
