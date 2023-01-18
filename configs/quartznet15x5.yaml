@@ -1,0 +1,183 @@
+name: &name "QuartzNet15x5"
+sample_rate: &sample_rate 16000
+repeat: &repeat 5
+dropout: &dropout 0.0
+separable: &separable true
+labels: &labels [" ", "a", "b", "c", "ç", "d", "e", "f", "g", "ğ", "h", "ı", "i", "j", "k", "l", "m",
+         "n", "o", "ö", "p", "q", "r", "s", "ş", "t", "u", "ü", "v", "w", "x", "y", "z", "'"]
+
+model:
+  train_ds:
+    manifest_filepath: ???
+    sample_rate: 16000
+    labels: *labels
+    batch_size: 64
+    trim_silence: True
+    max_duration: 16.7
+    shuffle: True
+    is_tarred: False
+    tarred_audio_filepaths: null
+    normalize_transcripts: False
+    num_workers: 8
+    
+  validation_ds:
+    manifest_filepath: ???
+    sample_rate: 16000
+    labels: *labels
+    batch_size: 32
+    shuffle: False
+
+  preprocessor:
+    cls: nemo.collections.asr.modules.AudioToMelSpectrogramPreprocessor
+    params:
+      window_size: 0.02
+      window_stride: 0.01
+      window: "hann"
+      normalize: "per_feature"
+      n_fft: 512
+      features: &n_mels 64
+      dither: 0.00001
+      pad_to: 16
+      stft_conv: true
+
+
+  spec_augment:
+    cls: nemo.collections.asr.modules.SpectrogramAugmentation
+    params:
+      rect_freq: 50
+      rect_masks: 5
+      rect_time: 120
+
+  encoder:
+    cls: nemo.collections.asr.modules.ConvASREncoder
+    params:
+      feat_in: *n_mels
+      activation: relu
+      conv_mask: true
+
+      jasper:
+        - filters: 256
+          repeat: 1
+          kernel: [ 33 ]
+          stride: [ 2 ]
+          dilation: [ 1 ]
+          dropout: 0.0
+          residual: false
+          separable: true
+
+        - filters: 256
+          repeat: 5
+          kernel: [ 33 ]
+          stride: [ 1 ]
+          dilation: [ 1 ]
+          dropout: 0.0
+          residual: true
+          separable: true
+
+        - filters: 256
+          repeat: 5
+          kernel: [ 39 ]
+          stride: [ 1 ]
+          dilation: [ 1 ]
+          dropout: 0.0
+          residual: true
+          separable: true
+
+        - filters: 512
+          repeat: 5
+          kernel: [ 51 ]
+          stride: [ 1 ]
+          dilation: [ 1 ]
+          dropout: 0.0
+          residual: true
+          separable: true
+
+        - filters: 512
+          repeat: 5
+          kernel: [ 63 ]
+          stride: [ 1 ]
+          dilation: [ 1 ]
+          dropout: 0.0
+          residual: true
+          separable: true
+
+        - filters: 512
+          repeat: 5
+          kernel: [ 75 ]
+          stride: [ 1 ]
+          dilation: [ 1 ]
+          dropout: 0.0
+          residual: true
+          separable: true
+
+        - filters: 512
+          repeat: 1
+          kernel: [ 87 ]
+          stride: [ 1 ]
+          dilation: [ 2 ]
+          dropout: 0.0
+          residual: false
+          separable: true
+
+        - filters: 1024
+          repeat: 1
+          kernel: [ 1 ]
+          stride: [ 1 ]
+          dilation: [ 1 ]
+          dropout: 0.0
+          residual: false
+
+  decoder:
+    cls: nemo.collections.asr.modules.ConvASRDecoder
+    params:
+      feat_in: 1024
+      num_classes: 34
+      vocabulary: *labels
+
+  optim:
+    name: novograd
+    # cls: nemo.core.optim.optimizers.Novograd
+    lr: 0.001
+    # optimizer arguments
+    betas: [0.95, 0.25]
+    weight_decay: 0.001
+
+    # scheduler setup
+    sched:
+      name: CosineAnnealing
+
+      # pytorch lightning args
+      monitor: val_loss
+      reduce_on_plateau: false
+
+      # Scheduler params
+      warmup_steps: null
+      warmup_ratio: 0.12
+      min_lr: 0.0000001
+      last_epoch: -1
+
+trainer:
+  gpus: 0 # number of gpus
+  max_epochs: 1
+  max_steps: null # computed at runtime if not set
+  num_nodes: 1
+  accelerator: ddp
+  accumulate_grad_batches: 1
+  checkpoint_callback: False  # Provided by exp_manager
+  logger: False  # Provided by exp_manager
+  log_every_n_steps: 500  # Interval of logging.
+  val_check_interval: 1.0 # check once per epoch .25 for 4 times per epoch
+  num_workers: 8
+
+exp_manager:
+  exp_dir: null
+  name: *name
+  create_tensorboard_logger: True
+  create_checkpoint_callback: True
+
+hydra:
+  run:
+    dir: .
+  job_logging:
+    root:
+      handlers: null
