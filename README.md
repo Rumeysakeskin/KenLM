@@ -12,16 +12,16 @@ bzip2 corpus.txt
 
 - #### Train language model by 3-gram:
 Run the following command to create a `kenlm_3gram.arpa` model.
-```
+```python
 bzcat corpus.txt.bz2 | python preprocess.py | ./kenlm/bin/lmplz -o 3 > kenlm_3gram.arpa
 ```
 ### Inference KenLM  
 We will use KenLM Model to the output of the STT inference for auto-correction.
-```
+```python
 python kenlm_inference.py
 ```
 - #### Benchmark of Original STT output and KenLM output
-```
+```python
 expected output: naber bugün nasılsın 
 
 stt prediction: naber bugun nasılsım
